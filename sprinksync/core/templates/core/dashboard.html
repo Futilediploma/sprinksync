@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ request.user.username }}!</h1>
+    <p>You're logged in under: <strong>{{ request.user.company.name }}</strong></p>
+
+    <ul>
+        <li><a href="{% url 'project_list' %}">📁 View Projects</a></li>
+        <li><a href="{% url 'add_user' %}">👤 Add User</a></li>
+        <li><a href="{% url 'logout' %}">🚪 Log Out</a></li>
+    </ul>
+</body>
+</html>
