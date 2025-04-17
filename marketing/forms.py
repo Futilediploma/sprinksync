@@ -6,7 +6,7 @@ from .models import Interest
 class InterestForm(forms.ModelForm):
     class Meta:
         model = Interest
-        fields = ["name", "email"]
+        fields = ["name", "email", "company"]
         widgets = {
             "name": forms.TextInput(attrs={
                 "placeholder": "Your name (optional)",
@@ -19,7 +19,7 @@ class InterestForm(forms.ModelForm):
             }),
             "company": forms.TextInput(attrs={
                 "placeholder": "Company Name",
-                "class": "border rounded px-3 py 4 w-full"
+                "class": "border rounded px-3 py-2 w-full"
             }),
         }
 
