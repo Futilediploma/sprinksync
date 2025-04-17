@@ -17,6 +17,10 @@ class InterestForm(forms.ModelForm):
                 "required": True,
                 "class": "border rounded px-3 py-2 w-full"
             }),
+            "company": forms.TextInput(attrs={
+                "placeholder": "Company Name",
+                "class": "border rounded px-3 py 4 w-full"
+            }),
         }
 
     def clean_email(self):
