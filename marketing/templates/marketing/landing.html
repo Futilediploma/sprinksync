@@ -1,43 +1,69 @@
-# marketing/views.py
-import os
-import requests
-from django.conf import settings
-from django.shortcuts import render
-from django.core.mail import send_mail
-from .forms import InterestForm
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SprinkSync • Automate Your Workflow</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'marketing/css/landing.css' %}">
+</head>
+<body class="bg-white text-gray-900 font-inter">
 
-def landing_page(request):
-    form = InterestForm(request.POST or None)
-    success = False
+  <!-- Header omitted for brevity -->
 
-    if request.method == 'POST' and form.is_valid():
-        interest = form.save()
+  <!-- Hero Section -->
+  <section class="relative bg-gray-50 overflow-hidden">
+    <!-- background image omitted for brevity -->
+    <div class="relative max-w-3xl mx-auto text-center py-24 px-6">
+      <h1 class="text-5xl font-bold text-gray-800 mb-4">
+        Link Bids To Design To Field Seamlessly
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        SprinkSync bridges your estimation team, design team, and field team through all phases—keeping teams aligned and projects on schedule.
+      </p>
 
-        # transactional emails…
-        send_mail(...)
+      {% if success %}
+        <!-- Success message -->
+        <div class="inline-block bg-green-100 text-green-800 px-6 py-3 rounded-md font-medium">
+          Thank you! We’ll keep you posted.
+        </div>
 
-        # add to Brevo contacts
-        api_url = 'https://api.brevo.com/v3/contacts'
-        headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'api-key': os.environ.get('BREVO_API_KEY', ''),
-        }
-        payload = {
-            'email': interest.email,
-            'attributes': {'FNAME': interest.name or ''},
-            'listIds': [int(os.environ.get('BREVO_LIST_ID', 0))],
-            'updateEnabled': True,
-        }
-        resp = requests.post(api_url, headers=headers, json=payload)
+        <!-- Brevo debug block -->
+        {% if brevo_status %}
+          <div class="mt-4 p-4 bg-gray-100 text-sm text-gray-700 text-left">
+            <strong>Debug:</strong><br>
+            API status: {{ brevo_status }}<br>
+            Response: <pre class="whitespace-pre-wrap">{{ brevo_body }}</pre>
+          </div>
+        {% endif %}
 
-        # Debug output
-        print("=== Brevo API call ===")
-        print("URL:", api_url)
-        print("List ID:", os.environ.get('BREVO_LIST_ID'))
-        print("Status:", resp.status_code)
-        print("Response body:", resp.text)
+      {% else %}
 
-        success = True
+        <!-- Validation error -->
+        {% if form.email.errors %}
+          <div class="max-w-3xl mx-auto mb-6 text-red-600">
+            {{ form.email.errors.0 }}
+          </div>
+        {% endif %}
 
-    return render(request, 'marketing/landing.html', {'form': form, 'success': success})
+        <!-- Signup form -->
+        <form method="post" class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+          {% csrf_token %}
+          {{ form.name }}
+          {{ form.email }}
+          <button type="submit"
+                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-6 py-3">
+            Get Early Access
+          </button>
+        </form>
+
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Features & Footer omitted for brevity -->
+
+</body>
+</html>
