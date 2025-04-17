@@ -42,6 +42,14 @@
           Thank you! We’ll keep you posted.
         </div>
       {% else %}
+
+        {# Show email‐specific errors #}
+        {% if form.email.errors %}
+          <div class="max-w-3xl mx-auto mb-6 text-red-600">
+            {{ form.email.errors.0 }}
+          </div>
+        {% endif %}
+
         <form method="post" class="flex flex-col sm:flex-row items-center gap-4 justify-center">
           {% csrf_token %}
           {{ form.name }}   {# renders your TextInput with placeholder & classes #}

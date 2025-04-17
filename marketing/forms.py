@@ -1,5 +1,6 @@
 # marketing/forms.py
 from django import forms
+from django.core.exceptions import ValidationError
 from .models import Interest
 
 class InterestForm(forms.ModelForm):
@@ -17,3 +18,9 @@ class InterestForm(forms.ModelForm):
                 "class": "border rounded px-3 py-2 w-full"
             }),
         }
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if email and Interest.objects.filter(email=email).exists():
+            raise ValidationError("This email has already signed up.")
+        return email
