@@ -1,6 +1,6 @@
 # marketing/views.py
-
-import os, requests
+import os
+import requests
 from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import send_mail
@@ -13,9 +13,10 @@ def landing_page(request):
     brevo_body = None
 
     if request.method == 'POST' and form.is_valid():
+        # 1️⃣ Save to your database
         interest = form.save()
 
-        # send your transactional emails as before...
+        # 2️⃣ Send your transactional emails
         send_mail(
             'New SprinkSync Interest',
             f"{interest.name or 'Someone'} signed up with {interest.email}.",
@@ -29,21 +30,30 @@ def landing_page(request):
             [interest.email],
         )
 
-        # Brevo API call
-        api_url = 'https://api.brevo.com/v3/contacts'
-        headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'api-key': os.environ.get('BREVO_API_KEY',''),
-        }
+        # ─────────────── Add Brevo API call here ───────────────
+
+        # 3️⃣ Define the payload using your actual Brevo attribute key
         payload = {
             'email': interest.email,
-            'attributes': {'FNAME': interest.name or ''},
+            'attributes': {
+                'FIRSTNAME': interest.name or ''    # ← use the exact key from your Brevo Attributes settings
+            },
             'listIds': [int(os.environ.get('BREVO_LIST_ID', 0))],
             'updateEnabled': True,
         }
 
-        resp = requests.post(api_url, headers=headers, json=payload)
+        # 4️⃣ Fire the request to Brevo
+        resp = requests.post(
+            'https://api.brevo.com/v3/contacts',
+            headers={
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'api-key': os.environ.get('BREVO_API_KEY', ''),
+            },
+            json=payload
+        )
+
+        # 5️⃣ Capture the response for debugging or display
         brevo_status = resp.status_code
         brevo_body   = resp.text
 
