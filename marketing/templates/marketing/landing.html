@@ -11,59 +11,97 @@
 </head>
 <body class="bg-white text-gray-900 font-inter">
 
-  <!-- Header omitted for brevity -->
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center">
+        <img src="{% static 'marketing/images/logo.png' %}" alt="SprinkSync logo" class="h-10">
+        <span class="ml-2 text-2xl font-semibold">SprinkSync</span>
+      </a>
+      <nav class="space-x-8">
+        <a href="#features" class="hover:text-indigo-600">Features</a>
+        <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Sign In</a>
+      </nav>
+    </div>
+  </header>
 
   <!-- Hero Section -->
   <section class="relative bg-gray-50 overflow-hidden">
-    <!-- background image omitted for brevity -->
+    <div class="absolute inset-0">
+      <img src="{% static 'marketing/images/hero-bg.jpg' %}" alt="Workflow background"
+           class="w-full h-full object-cover opacity-20">
+    </div>
     <div class="relative max-w-3xl mx-auto text-center py-24 px-6">
-      <h1 class="text-5xl font-bold text-gray-800 mb-4">
-        Link Bids To Design To Field Seamlessly
-      </h1>
+      <h1 class="text-5xl font-bold text-gray-800 mb-4">Link Bids To Design To Field Seamlessly</h1>
       <p class="text-lg text-gray-600 mb-8">
         SprinkSync bridges your estimation team, design team, and field team through all phases—keeping teams aligned and projects on schedule.
       </p>
 
       {% if success %}
-        <!-- Success message -->
         <div class="inline-block bg-green-100 text-green-800 px-6 py-3 rounded-md font-medium">
           Thank you! We’ll keep you posted.
         </div>
-
-        <!-- Brevo debug block -->
-        {% if brevo_status %}
-          <div class="mt-4 p-4 bg-gray-100 text-sm text-gray-700 text-left">
-            <strong>Debug:</strong><br>
-            API status: {{ brevo_status }}<br>
-            Response: <pre class="whitespace-pre-wrap">{{ brevo_body }}</pre>
-          </div>
-        {% endif %}
-
       {% else %}
-
-        <!-- Validation error -->
+      
+      {% if brevo_status %}
+      <div class="mt-4 p-4 bg-gray-100 text-sm text-gray-700">
+        <strong>Debug:</strong><br>
+        API status: {{ brevo_status }}<br>
+        Response: <pre class="whitespace-pre-wrap">{{ brevo_body }}</pre>
+      </div>
+    {% endif %}
+    
+        {# Show email‐specific errors #}
         {% if form.email.errors %}
           <div class="max-w-3xl mx-auto mb-6 text-red-600">
             {{ form.email.errors.0 }}
           </div>
         {% endif %}
 
-        <!-- Signup form -->
         <form method="post" class="flex flex-col sm:flex-row items-center gap-4 justify-center">
           {% csrf_token %}
-          {{ form.name }}
-          {{ form.email }}
+          {{ form.name }}   {# renders your TextInput with placeholder & classes #}
+          {{ form.email }}  {# renders your EmailInput with placeholder & classes #}
           <button type="submit"
                   class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-6 py-3">
             Get Early Access
           </button>
         </form>
-
       {% endif %}
     </div>
   </section>
 
-  <!-- Features & Footer omitted for brevity -->
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/budget.svg' %}" alt="Budget sync icon" class="h-12 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Auto Budget Sync</h3>
+          <p class="text-gray-600">Visualize estimated vs actual costs in real time for better financial control.</p>
+        </div>
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/calendar.svg' %}" alt="Milestones icon" class="h-12 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Design Milestones</h3>
+          <p class="text-gray-600">Stay on track with automated reminders for key coordination and approval deadlines.</p>
+        </div>
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/files.svg' %}" alt="File repo icon" class="h-12 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Central File Repository</h3>
+          <p class="text-gray-600">Keep RFIs, change orders, and drawings centralized and accessible to every stakeholder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+      © 2025 SprinkSync. All rights reserved. • <a href="#" class="hover:text-indigo-600">Privacy Policy</a> •
+      <a href="#" class="hover:text-indigo-600">Terms of Service</a>
+    </div>
+  </footer>
 
 </body>
 </html>
