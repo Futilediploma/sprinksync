@@ -65,3 +65,13 @@ def landing_page(request):
         'brevo_status': brevo_status,
         'brevo_body': brevo_body,
     })
+
+
+def estimating_page(request):
+    return render(request, 'marketing/estimating.html')
+
+def design_page(request):
+    return render(request, 'marketing/design.html')
+
+def field_page(request):
+    return render(request, 'marketing/field.html')
