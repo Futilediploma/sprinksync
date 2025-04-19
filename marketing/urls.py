@@ -7,5 +7,8 @@ urlpatterns = [
     path('', landing_page, name='landing'),
     path('estimating/', views.estimating_page, name='estimating'),
     path('design/', views.design_page, name='design'),
+    path('project/', views.project_page, name='project'),
+    path('field/', views.field_page, name='field'),
+
 
 ]

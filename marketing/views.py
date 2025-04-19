@@ -75,3 +75,6 @@ def design_page(request):
 
 def field_page(request):
     return render(request, 'marketing/field.html')
+
+def project_page(request):
+    return render(request, 'marketing/project.html')
