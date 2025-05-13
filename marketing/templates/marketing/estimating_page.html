@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estimating | SprinkSync</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'marketing/css/landing.css' %}" />
+</head>
+<body class="bg-white text-gray-900 font-inter">
+
+  <!-- Hero Section -->
+  <section class="bg-gray-50 py-20 text-center px-6">
+    <h1 class="text-4xl sm:text-5xl font-bold mb-4">Build Smart from the Start</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+      SprinkSync’s Estimating module helps you build your project cost structure, assign key details, and generate everything from Schedule of Values to NFPA references — all in one place.
+    </p>
+    <a href="#" class="inline-block px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700">Start with Estimating</a>
+  </section>
+
+  <!-- Section 1: Cost Creation + SOV -->
+  <section class="py-16 bg-white px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <img src="{% static 'marketing/images/sov-mockup.png' %}" alt="SOV Mockup" class="rounded shadow-md">
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">Create Once. Track Forever.</h2>
+        <ul class="space-y-2 text-gray-700">
+          <li>✔ Create your entire cost sheet inside SprinkSync</li>
+          <li>✔ Generate a clean Schedule of Values automatically</li>
+          <li>✔ Link line items to scope packages and phases</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: NFPA Integration -->
+  <section class="py-16 bg-gray-50 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">NFPA Code Clarity — Built In</h2>
+        <ul class="space-y-2 text-gray-700">
+          <li>✔ Select project type → we suggest the relevant NFPA sections</li>
+          <li>✔ Auto-embed code details in your estimating package</li>
+          <li>✔ Link directly to code sections for design team handoff</li>
+        </ul>
+      </div>
+      <img src="{% static 'marketing/images/nfpa-codes.png' %}" alt="NFPA Integration" class="rounded shadow-md">
+    </div>
+  </section>
+
+  <!-- Section 3: Project Type Tagging -->
+  <section class="py-16 bg-white px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <img src="{% static 'marketing/images/project-types.png' %}" alt="Project Types" class="rounded shadow-md">
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">Estimate for the Right Job</h2>
+        <ul class="space-y-2 text-gray-700">
+          <li>✔ Tag your job: Core & Shell, TI, Healthcare, etc.</li>
+          <li>✔ SprinkSync adapts estimating templates and SOV layout</li>
+          <li>✔ Improve reporting consistency across your projects</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: GC Info -->
+  <section class="py-16 bg-gray-50 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">Never Lose Track of the GC Again</h2>
+        <ul class="space-y-2 text-gray-700">
+          <li>✔ Save GC contact, email, and site super info</li>
+          <li>✔ Upload and reference the subcontract instantly</li>
+          <li>✔ Sync project start dates and contract value</li>
+        </ul>
+      </div>
+      <img src="{% static 'marketing/images/gc-info.png' %}" alt="GC Info" class="rounded shadow-md">
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-20 text-center bg-white px-6">
+    <h2 class="text-4xl font-bold mb-4">From Bid to Build — This Is Your Starting Point</h2>
+    <p class="text-lg text-gray-600 mb-6">Start with SprinkSync Estimating and unlock the full power of integrated project delivery.</p>
+    <a href="#" class="inline-block px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700">Try the Estimating Module</a>
+  </section>
+
+</body>
+</html>

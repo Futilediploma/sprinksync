@@ -1,0 +1,6 @@
+<h1>{{ form.instance.name|default:"New Project" }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>

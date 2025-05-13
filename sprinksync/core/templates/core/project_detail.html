@@ -1,0 +1,5 @@
+<h1>{{ project.name }}</h1>
+<p>Client: {{ project.client }}</p>
+<p>Start Date: {{ project.start_date }}</p>
+<p>Estimated Budget: {{ project.budget_estimate }}</p>
+<a href="{% url 'project_edit' project.pk %}">Edit</a>

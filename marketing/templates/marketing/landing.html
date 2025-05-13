@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SprinkSync • Automate Your Workflow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'marketing/css/landing.css' %}">
+</head>
+<body class="bg-white text-gray-900 font-inter">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center">
+        <img src="{% static 'marketing/images/logo.png' %}" alt="SprinkSync logo" class="h-12 sm:h-16">
+        <span class="ml-2 text-xl sm:text-2xl font-semibold">SprinkSync</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6">
+        <a href="#features" class="hover:text-indigo-600">Features</a>
+        <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm">Sign In Coming Soon</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="focus:outline-none">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Links -->
+    <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 space-y-2">
+      <a href="#features" class="block text-gray-800 hover:text-indigo-600">Features</a>
+      <a href="#" class="block text-white bg-indigo-600 rounded-md px-4 py-2 text-center hover:bg-indigo-700">Sign In Coming Soon</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="{% static 'marketing/images/hero-bg.png' %}" alt="Workflow background"
+           class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative max-w-3xl mx-auto text-center py-24 px-6">
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">Seamlessly Bridge Your Estimating,<br>
+        Design & Field Teams
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        SprinkSync connects your estimation team, design team, and field team through all phases keeping teams aligned and projects on schedule.
+      </p>
+
+      {% if success %}
+        <div class="inline-block bg-green-100 text-green-800 px-6 py-3 rounded-md font-medium">
+          Thank you! We’ll keep you posted.
+        </div>
+      {% else %}
+
+        {% if brevo_status %}
+          <div class="mt-4 p-4 bg-gray-100 text-sm text-gray-700">
+            <strong>Debug:</strong><br>
+            API status: {{ brevo_status }}<br>
+            Response: <pre class="whitespace-pre-wrap">{{ brevo_body }}</pre>
+          </div>
+        {% endif %}
+
+        {% if form.email.errors %}
+          <div class="max-w-3xl mx-auto mb-6 text-red-600">
+            {{ form.email.errors.0 }}
+          </div>
+        {% endif %}
+
+        <form method="post" class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+          {% csrf_token %}
+          {{ form.name }}
+          {{ form.email }}
+          {{ form.company }}
+          <button type="submit"
+                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-3 py-2 w-full">
+            Interest Sign Up 
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/budget.png' %}" alt="Budget sync icon" class="h-40 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Auto Budget Sync</h3>
+          <p class="text-gray-600">Visualize estimated vs actual costs in real time for better financial control.<br> 
+          Preview coming soon.</p>
+        </div>
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/calendar.png' %}" alt="Milestones icon" class="h-40 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Design Milestones</h3>
+          <p class="text-gray-600">Stay on track with automated reminders for key coordination and approval deadlines.<br> 
+            Preview coming soon.
+          </p>
+        </div>
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/files.png' %}" alt="File repo icon" class="h-40 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Central File Repository</h3>
+          <p class="text-gray-600">Keep RFIs, change orders, and drawings centralized and accessible to every stakeholder.<br> 
+            Preview coming soon.
+          </p>
+        </div>
+        <div class="flex flex-col items-center text-center p-6 border rounded-lg hover:shadow-lg transition">
+          <img src="{% static 'marketing/icons/field.png' %}" alt="File repo icon" class="h-40 mb-4">
+          <h3 class="text-xl font-semibold mb-2">Field Management</h3>
+          <p class="text-gray-600">Manage field team hours and timesheets, field drawing, Time and Material tickets.<br> 
+            Preview coming soon.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+      © 2025 SprinkSync. All rights reserved. • 
+      <a href="#" class="hover:text-indigo-600">Privacy Policy</a> • 
+      <a href="#" class="hover:text-indigo-600">Terms of Service</a>
+    </div>
+  </footer>
+
+  <!-- Mobile Menu Toggle Script -->
+  <script>
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
