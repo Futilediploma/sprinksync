@@ -4,17 +4,29 @@ import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
+
 # SECURITY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'test1')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
 # Allow localhost and 127.0.0.1 in development; override via ENV in production
 if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.14' , 'sprinksync.onrender.com', 'sprinksync.com', 'www.sprinksync.com']
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '192.168.1.14',        # LAN address for testing
+        'sprinksync.onrender.com',
+        'sprinksync.com',
+        'www.sprinksync.com',
+    ]
 else:
-    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else []
+    # Read from environment or default to production domains
+    ALLOWED_HOSTS = os.environ.get(
+        'ALLOWED_HOSTS',
+        'sprinksync.com,www.sprinksync.com'
+    ).split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,8 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sprinksync.wsgi.application'
 
-# Database configuration: use DATABASE_URL if provided, else default to SQLite for local development
-# Database configuration
+# Database configuration: use DATABASE_URL if provided, else default to PostgreSQL
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
         'default': dj_database_url.parse(
@@ -94,27 +105,21 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# URL to access static files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-
-# Directory where static files will be collected
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Directories to look for additional static files during development
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email (SMTP)
-EMAIL_BACKEND      = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST         = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT         = int(os.getenv('EMAIL_PORT', 587))
-EMAIL_USE_TLS      = True
-EMAIL_HOST_USER    = os.getenv('EMAIL_HOST_USER', 'your-email@example.com')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@example.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
-DEFAULT_FROM_EMAIL  = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
