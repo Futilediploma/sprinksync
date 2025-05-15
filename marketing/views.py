@@ -5,6 +5,9 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import send_mail
 from .forms import InterestForm
+from django.views.generic import FormView, TemplateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def landing_page(request):
     form = InterestForm(request.POST or None)
@@ -92,6 +95,18 @@ def landing_page(request):
         'brevo_body': brevo_body,
     })
 
+class SignUpView(FormView):
+    template_name = 'registration/signup.html'
+    form_class = UserCreationForm
+    success_url = '/login/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard.html'
+    login_url = 'login'
 
 def estimating_page(request):
     return render(request, 'marketing/estimating.html')

@@ -1,0 +1,45 @@
+<!-- templates/registration/login.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Log In • SprinkSync{% endblock %}
+
+{% block content %}
+<section class="relative min-h-screen bg-gray-50 overflow-hidden">
+  <div class="absolute inset-0">
+    <img src="{% static 'marketing/images/hero-bg1.png' %}" 
+         alt="Workflow background" 
+         class="w-full h-full object-cover opacity-20">
+  </div>
+  <div class="relative flex items-center justify-center min-h-screen">
+    <div class="backdrop-blur-md bg-white/70 p-8 rounded-xl shadow-lg max-w-md w-full mx-4">
+      <div class="text-center mb-6">
+        <img src="{% static 'marketing/images/logo.png' %}" alt="SprinkSync" class="mx-auto h-12">
+        <h1 class="mt-4 text-2xl font-bold text-gray-800">Welcome Back</h1>
+        <p class="text-gray-600">Log in to access your dashboard</p>
+      </div>
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </div>
+        <div>
+          {{ form.password.label_tag }}
+          {{ form.password }}
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md py-2"
+        >
+          Log In
+        </button>
+      </form>
+      <p class="mt-4 text-center text-gray-600">
+        New to SprinkSync?
+        <a href="{% url 'signup' %}" class="text-indigo-600 hover:underline">Create an account</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

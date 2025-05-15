@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard • SprinkSync{% endblock %}
+
+{% block content %}
+<section class="relative min-h-screen bg-gray-50 overflow-hidden">
+  <!-- Hero background -->
+  <div class="absolute inset-0">
+    <img
+      src="{% static 'marketing/images/hero-bg.png' %}"
+      alt="Workflow background"
+      class="w-full h-full object-cover opacity-20"
+    >
+  </div>
+  <!-- Centered card -->
+  <div class="relative flex items-center justify-center min-h-screen px-4">
+    <div class="backdrop-blur-md bg-white/70 p-8 rounded-xl shadow-lg max-w-lg w-full">
+      <div class="text-center mb-6">
+        <img src="{% static 'marketing/images/logo.png' %}" alt="SprinkSync" class="mx-auto h-12">
+        <h1 class="mt-4 text-2xl font-bold text-gray-800">Welcome, {{ user.username }}!</h1>
+        <p class="text-gray-600 mt-2">
+          Your dashboard is currently under construction.  
+          From here you’ll soon be able to start a project or explore SprinkSync features.
+        </p>
+      </div>
+
+      <!-- Example action buttons -->
+      <div class="space-y-4">
+        <a
+        href="#"
+        class="block w-full text-center bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-md py-2"
+        >
+        Start a New Project<br>
+        <span class="text-sm font-normal">(Coming Soon!)</span>
+        </a>
+
+      </div>
+
+      <!-- Logout form -->
+      <form method="post" action="{% url 'logout' %}" class="mt-6">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md py-2"
+        >
+          Log Out
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

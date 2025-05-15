@@ -11,7 +11,16 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.environ.get('SECRET_KEY', 'test1')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Allowed hosts for development and production
+# Session settings: expire on browser close and after inactivity
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 60 * 15  # 15 minutes
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Redirects after login/logout
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'landing'
+
+# Allowed hosts
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
     'localhost,127.0.0.1,192.168.1.14,sprinksync.onrender.com,sprinksync.com,www.sprinksync.com'
@@ -59,7 +68,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sprinksync.wsgi.application'
 
-# Database configuration: use DATABASE_URL if provided, else default to PostgreSQL
+# Database configuration: use DATABASE_URL if provided, else default to SQLite
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
         'default': dj_database_url.parse(
@@ -71,14 +80,17 @@ if os.environ.get('DATABASE_URL'):
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DB', 'sprinksync_db'),
-            'USER': os.getenv('POSTGRES_USER', 'your_db_user'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'your_db_password'),
-            'HOST': os.getenv('DB_HOST', 'db'),
-            'PORT': os.getenv('DB_PORT', '5432'),
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
+# CSRF and proxy settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://sprinksync.com',
+    'https://www.sprinksync.com',
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -96,10 +108,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'marketing' / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
