@@ -11,22 +11,11 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.environ.get('SECRET_KEY', 'test1')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Allow localhost and 127.0.0.1 in development; override via ENV in production
-if DEBUG:
-    ALLOWED_HOSTS = [
-        'localhost',
-        '127.0.0.1',
-        '192.168.1.14',        # LAN address for testing
-        'sprinksync.onrender.com',
-        'sprinksync.com',
-        'www.sprinksync.com',
-    ]
-else:
-    # Read from environment or default to production domains
-    ALLOWED_HOSTS = os.environ.get(
-        'ALLOWED_HOSTS',
-        'sprinksync.com,www.sprinksync.com'
-    ).split(',')
+# Allowed hosts for development and production
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1,192.168.1.14,sprinksync.onrender.com,sprinksync.com,www.sprinksync.com'
+).split(',')
 
 # Application definition
 INSTALLED_APPS = [
